@@ -1,13 +1,23 @@
 {
     "name": "boo1ean/forager",
-    "description": "it just works",
-    "require": {
-        "fabpot/goutte": "dev-master"
-    },
+    "homepage": "https://github.com/boo1ean/forager",
+    "description": "Web Scraper",
+    "keywords": ["scraper"],
+    "license": "MIT",
+
     "authors": [
         {
             "name": "Egor Gumenyuk",
             "email": "boo1ean0807@gmail.com"
         }
-    ]
+    ],
+
+    "require": {
+        "fabpot/goutte": "dev-master"
+    },
+
+
+    "autoload": {
+        "psr-0": { "Forager": "." }
+    }
 }
