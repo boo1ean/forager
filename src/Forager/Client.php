@@ -50,12 +50,17 @@ class Client extends BaseClient
 			$crawler = $p['transform']['input']($this, $crawler);
 		}
 
+		$extractMethod = 'text';
+		if (!empty($p['extract']['method'])) {
+			$extractMethod = $p['extract']['method'];
+		}
+
 		$scope  = $p['extract']['scope'];
 		$map    = $p['extract']['map'];
 		$result = array();
 
 		$rows = $crawler->filter($scope);
-		$rows->each(function ($node) use ($map, &$result) {
+		$rows->each(function ($node) use ($map, &$result, $extractMethod) {
 			$row = array();
 			foreach ($map as $prop => $selector) {
 				$attr = null;
@@ -69,7 +74,7 @@ class Client extends BaseClient
 					if ($attr) {
 						$val = $val->attr($attr);
 					} else {
-						$val = $val->text();
+						$val = $val->{$extractMethod}();
 					}
 				} else {
 					$val = null;
