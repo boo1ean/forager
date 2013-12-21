@@ -1,6 +1,7 @@
 <?php namespace Forager;
 
 use Goutte\Client as BaseClient;
+use Guzzle\Http\Client as GuzzleClient;
 use Auth\AuthInterface;
 use Symfony\Component\BrowserKit\History;
 use Symfony\Component\BrowserKit\CookieJar;
@@ -224,5 +225,19 @@ class Client extends BaseClient
 
 	protected function arrayCacheKey($array) {
 		return md5(serialize($array));
+	}
+
+	/**
+	 * Set curl http proxy option
+	 * @param string $proxy http proxy
+	 */
+	public function setProxy($proxy)
+	{
+		$config = $this->getClient()->getConfig();
+
+		$curl = $this->client->getConfig(GuzzleClient::CURL_OPTIONS);
+		$curl[CURLOPT_PROXY] = $proxy;
+
+		$config->set(GuzzleClient::CURL_OPTIONS, $curl);
 	}
 }
